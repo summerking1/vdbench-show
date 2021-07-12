@@ -1,0 +1,31 @@
+{
+	"name": "text-22-json",
+	"version": "1.0.4",
+	"description": "Convert delimited txt file to json",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/danwild/text2json.git"
+	},
+	"keywords": [
+		"nodejs",
+		"json",
+		"text",
+		"delimited"
+	],
+	"author": "danwild@y7mail.com",
+	"license": "ISC",
+	"bin": {
+		"text-2-json": "./index.js"
+	},
+	"dependencies": {
+		"mqtt": "^4.2.8",
+		"split": "^1.0.1",
+		"text-2-json": "^1.0.4",
+		"underscore": "^1.13.1",
+		"yargs": "^4.8.1"
+	}
+}

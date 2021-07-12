@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vdbench结果展示图</title>
+    <style type="text/css">
+        #main {
+            height: 700px;
+            width: 1400px;
+        }
+    </style>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script> 
+</head>
+
+<body>
+    <div id="main"></div>
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+            title: {
+                text: "Vdbench结果展示图",
+                subtext: "test-time"
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['时间', '带宽速率']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: { show: true },
+                    dataView: { show: true, readOnly: false },
+                    magicType: { show: true, type: ['line', 'bar'] },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            xAxis: {
+                type: 'category',
+                data: []
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '带宽速率',
+                    type: 'line',
+                    data: []
+                },
+                {
+                    name: '时间',
+                    type: 'line',
+                    data: []
+                }
+            ]
+        };
+        myChart.setOption(option);
+        $.ajax({
+            url: "./Output/txtToJson.json",
+            dataType: "json"
+        }).done(function (res) {
+            list = res;
+            // list = res.data;
+            console.log('Data: ', list);
+            const xData = [];
+            const maxData = [];
+            const minData = [];
+            for (let i in list) {
+                minData.push(list[i].time);
+                maxData.push(list[i].speed);
+                xData.push(list[i].keep);
+
+            } myChart.setOption({         //在option添加数据
+                xAxis: {
+                    data: xData
+                },
+                series: [
+                    { data: maxData },
+                    { data: minData }
+                ]
+            });
+        }).fail(function (jqXHR) {
+            console.log("Ajax Fail: ", jqXHR.status, jqXHR.statusText);
+        }
+        )
+    </script>
+</body>
+
+</html>
